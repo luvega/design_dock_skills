@@ -1,0 +1,49 @@
+# Local research corpus and source material
+/corpus/
+/design articles/
+/Claude_code_skill/
+/CC-skill实战分子批量对接skill_2080605437701427200.md
+
+# Local audit products derived from non-redistributable sources
+/outputs/
+
+# Corpus-building and migration-audit utilities are kept local because they
+# depend on the excluded source tree.
+/scripts/
+
+# Generated run packages and scientific inputs/outputs
+/baker_design_run/
+/runs/
+/work/
+*.pdb
+*.pdbqt
+*.cif
+*.mmcif
+*.sdf
+*.mol2
+*.pt
+*.pth
+*.ckpt
+!examples/test-data/*.synthetic.pdbqt
+
+# Credentials and environment files
+.env
+.env.*
+*.pem
+*.key
+credentials*
+secrets*
+
+# Python and editor caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.idea/
+.vscode/
+
+# Operating-system files
+Thumbs.db
+Desktop.ini
+.DS_Store

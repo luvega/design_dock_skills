@@ -1,0 +1,82 @@
+# Prepare-only scaffold. The planning_only / REPLACE placeholders below are
+# intentionally unresolved and must produce planning gaps. Do not replace them
+# with plausible-looking values: strict run must remain blocked until real local
+# files, hashes, protocol decisions, versions, and paths replace every placeholder.
+schema_version: "1.1"
+route: "molecular-docking-screen"
+mode: "prepare"
+design_goal: "Redock gefitinib to the wild-type EGFR kinase co-crystal protocol from RCSB 4WKQ"
+target:
+  type: "folded-protein"
+  source: "https://www.rcsb.org/structure/4WKQ"
+  structure_file: "planning-only/REPLACE_WITH_PREPARED_4WKQ_CHAIN_A_RECEPTOR.pdbqt"
+  source_structure_file: "planning-only/REPLACE_WITH_4WKQ_MMCIF.cif"
+  source_structure_sha256: "REPLACE_WITH_SHA256"
+  assembly: "RCSB biological assembly 1; confirm biological relevance before execution"
+  chains: ["A"]
+  biological_state: "wild-type EGFR kinase construct, chain A; confirm assembly and construct boundaries before execution"
+  mutation_state: "wild-type"
+  receptor_state_id: "4wkq-egfr-wt-kinase-a"
+  receptor_preparation:
+    protonation: "planning_only: REPLACE_WITH_METHOD_PH_AND_VERSION"
+    missing_residues: "planning_only: REPLACE_WITH_EXPLICIT_RETAIN_MODEL_OR_EXCLUDE_DECISION"
+    alternate_locations: "planning_only: REPLACE_WITH_EXPLICIT_ALTLOC_SELECTION"
+    hetatm_policy: "retain named catalytic or structural cofactors; remove IRE only for redocking; document every other HETATM class"
+ligand:
+  file: "planning-only/REPLACE_WITH_EXTERNALLY_PREPARED_IRE_GEFITINIB.pdbqt"
+  source: "RCSB 4WKQ co-crystal ligand IRE"
+  ligand_id: "ire-gefitinib"
+  chemical_state:
+    strategy: "planning_only: REPLACE_WITH_PROTONATION_TAUTOMER_STEREO_AND_COVALENT_STATE_METHOD"
+    chemical_state_id: "ire-gefitinib-state-01"
+docking:
+  objective: "redocking"
+  engine: "autodock-vina"
+  binding_site:
+    source: "RCSB 4WKQ legacy PDB IRE heavy-atom arithmetic centroid, 31 HETATM records; rederive and verify from the hashed source before run"
+    center: [1.457484, 194.207935, 20.412774]
+    size: [20.0, 20.0, 20.0]
+    coordinate_status: "planning_only; source-derived center, protocol box size requires review before run"
+  seeds: [20260724, 20260725, 20260726]
+  num_poses: 20
+  exhaustiveness: 16
+  preparation:
+    use_meeko: false
+    note: "PDBQT files must be prepared externally; this workflow does not run Meeko"
+  validation:
+    controls:
+      - "co-crystal IRE redocking with declared atom mapping and symmetry handling"
+      - "negative-control pose or decoy defined before screening"
+    reference_pose: "planning-only/REPLACE_WITH_LOCAL_4WKQ_IRE_REFERENCE_POSE.sdf"
+    reference_pose_sha256: "REPLACE_WITH_SHA256"
+    atom_mapping:
+      file: "planning-only/REPLACE_WITH_LOCAL_IRE_ATOM_MAPPING.json"
+      sha256: "REPLACE_WITH_SHA256"
+    symmetry_handling: "planning_only: REPLACE_WITH_SYMMETRY_EQUIVALENT_ATOM_RULE"
+    receptor_alignment: "planning_only: REPLACE_WITH_RECEPTOR_ALIGNMENT_SELECTION_AND_METHOD"
+    heavy_atom_rule: "planning_only: REPLACE_WITH_HEAVY_ATOM_INCLUSION_AND_HYDROGEN_RULE"
+    rmsd_tool: "planning_only: REPLACE_WITH_RMSD_TOOL"
+    rmsd_tool_version: "planning_only: REPLACE_WITH_RMSD_TOOL_VERSION"
+    pose_selection: "planning_only: REPLACE_WITH_TOP_1_OR_TOP_N_POSE_SELECTION_RULE"
+    top_n: 5
+  analysis:
+    plip: false
+  visualization:
+    pymol: false
+backend:
+  kind: "local"
+  output_root: "planning-only/REPLACE_WITH_OUTPUT_ROOT"
+tools:
+  autodock_vina:
+    repository: "https://github.com/ccsb-scripps/AutoDock-Vina"
+    repo_path: "REPLACE_WITH_REPOSITORY_PATH_IF_SOURCE_BUILD"
+    commit: "REPLACE_WITH_COMMIT_IF_SOURCE_BUILD"
+    executable: "REPLACE_WITH_VINA_EXECUTABLE"
+    version: "REPLACE_WITH_INSTALLED_VERSION"
+    license: "Apache-2.0"
+reproducibility:
+  request_id: "4wkq-ire-redocking-v1"
+  prepared_input_sha256:
+    receptor: "REPLACE_WITH_SHA256"
+    ligand: "REPLACE_WITH_SHA256"
+  evidence_status: "planning_only"

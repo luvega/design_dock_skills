@@ -1,0 +1,94 @@
+# Generated run manifests always contain a schema version. Supported values are
+# "1.0" and "1.1"; an input request without schema_version defaults to "1.1".
+schema_version: "1.1"
+generated_at: "REPLACE_WITH_GENERATED_UTC_TIMESTAMP"
+run_id: "replace-with-generated-run-id"
+mode: "prepare"
+route: "molecular-docking-screen"
+evidence_status: "planning_only"
+input_hashes: {}
+tools:
+  autodock_vina: {}
+parameters:
+  target:
+    structure_file: "REPLACE_WITH_RECEPTOR_FILE"
+    assembly: "REPLACE_WITH_ASSEMBLY"
+    chains: ["A"]
+    biological_state: "REPLACE_WITH_BIOLOGICAL_STATE"
+    mutation_state: "REPLACE_WITH_MUTATION_STATE"
+    receptor_state_id: "replace-with-receptor-state-id"
+    receptor_preparation: {}
+  motif: null
+  ligand: null
+  ligand_library:
+    manifest_file: "REPLACE_WITH_LIBRARY_CSV"
+    sha256: "REPLACE_WITH_SHA256"
+    chemical_state_strategy: "REPLACE_WITH_CHEMICAL_STATE_STRATEGY"
+  docking:
+    objective: "target-focused-screen"
+    engine: "autodock-vina"
+    binding_site: {}
+    seeds: []
+    num_poses: null
+  external_service:
+    authorized: false
+    credential_rotation_acknowledged: false
+    data_classification: "REPLACE_WITH_PUBLIC_OR_NON_SENSITIVE"
+    auth_env: "NVIDIA_API_KEY"
+    endpoint: "https://health.api.nvidia.com/v1/molecular-docking/diffdock/generate"
+    service_version: "REPLACE_WITH_CONFIGURED_SERVICE_VERSION"
+    terms_url: "REPLACE_WITH_CURRENT_TERMS_URL"
+  fixed_positions: []
+  length: null
+  symmetry: null
+  negative_targets: []
+  function: {}
+random_seed: null
+candidate_count: null
+filters: []
+backend: {}
+preflight:
+  issues: []
+  ready_for_local_execution: false
+outputs:
+  root: "REPLACE_WITH_OUTPUT_ROOT"
+  design_brief: "REPLACE_WITH_OUTPUT_ROOT/design_brief.md"
+  target_manifest: "REPLACE_WITH_OUTPUT_ROOT/target_manifest.yaml"
+  run_manifest: "REPLACE_WITH_OUTPUT_ROOT/run_manifest.yaml"
+  commands: "REPLACE_WITH_OUTPUT_ROOT/commands.sh"
+  commands_ps1: "REPLACE_WITH_OUTPUT_ROOT/commands.ps1"
+  candidates: "REPLACE_WITH_OUTPUT_ROOT/candidates.csv"
+  docking_candidates: "REPLACE_WITH_OUTPUT_ROOT/docking_candidates.csv"
+  docking_report: "REPLACE_WITH_OUTPUT_ROOT/docking_report.md"
+execution:
+  status: "not-started"
+  command_problems: []
+  commands: []
+  argv_commands: []
+  argv_plan_sha256: "REPLACE_WITH_SHA256_OF_EMPTY_OR_GENERATED_ARGV_PLAN"
+  # Runtime fills this list. A completed Vina record uses: index, returncode,
+  # stdout, stderr, argv, output_path, output_sha256, output_bytes, pose_count.
+  # A completed hosted record uses: adapter, ligand_id, chemical_state_id,
+  # response_path, response_sha256, response_bytes, input_sha256, pose_count,
+  # pose_outputs[{pose_id,path,sha256,bytes}], expected_service_version,
+  # observed_service_version, and allowlisted observed_headers.
+  results: []
+# These three top-level fields mirror the corresponding request values exactly.
+docking:
+  objective: "target-focused-screen"
+  engine: "autodock-vina"
+  binding_site: {}
+  seeds: []
+  num_poses: null
+ligand_library:
+  manifest_file: "REPLACE_WITH_LIBRARY_CSV"
+  sha256: "REPLACE_WITH_SHA256"
+  chemical_state_strategy: "REPLACE_WITH_CHEMICAL_STATE_STRATEGY"
+external_service:
+  authorized: false
+  credential_rotation_acknowledged: false
+  data_classification: "REPLACE_WITH_PUBLIC_OR_NON_SENSITIVE"
+  auth_env: "NVIDIA_API_KEY"
+  endpoint: "https://health.api.nvidia.com/v1/molecular-docking/diffdock/generate"
+  service_version: "REPLACE_WITH_CONFIGURED_SERVICE_VERSION"
+  terms_url: "REPLACE_WITH_CURRENT_TERMS_URL"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Baker Protein Design & Docking"
+  short_description: "蛋白设计、分子对接、批量筛选、证据追踪与结果审计"
+  default_prompt: "Use $baker-protein-design 根据我的靶点、配体、功能目标与算力生成可审计的蛋白设计或分子对接流程。"

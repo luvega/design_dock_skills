@@ -1,0 +1,43 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      BAKER_DESIGN_TEST_ALLOW_NETWORK: "0"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate public release surface
+        run: python tools/validate_release.py
+
+      - name: Run offline unit tests
+        run: >-
+          python -m unittest discover
+          -s skills/baker-protein-design/scripts
+          -p "test_*.py"
+          -v
+
+      - name: Reject bytecode cache in the deliverable
+        shell: bash
+        run: |
+          if find skills -type d -name __pycache__ -o -type f -name '*.pyc' | grep -q .; then
+            echo "Python cache files were created inside skills/"
+            exit 1
+          fi

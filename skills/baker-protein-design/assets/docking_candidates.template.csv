@@ -1,0 +1,1 @@
+run_id,ligand_id,chemical_state_id,pose_id,pose_rank_within_ligand,engine,engine_version,receptor_state_id,seed,metric_name,metric_value,metric_unit,metric_role,rank_scope,input_sha256,raw_output_sha256,output_path,evidence_status,experimental_status,notes

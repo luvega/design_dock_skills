@@ -1,0 +1,63 @@
+schema_version: "1.1"
+design_goal: "Design a monovalent antagonist for a defined folded receptor surface"
+mechanism: antagonism
+target:
+  type: folded-protein
+  structure_file: /data/target.pdb
+  chains: [A]
+  hotspots: ["A:29", "A:31"]
+  biological_state: monomeric ectodomain state used for design
+motif: null
+ligand: null
+fixed_positions: []
+length:
+  min: 55
+  max: 80
+symmetry: null
+negative_targets:
+  - name: family-paralog-1
+    structure_file: /data/negative1.pdb
+function:
+  valency: monovalent
+  readouts: [expression, monodispersity, affinity, family_specificity, functional_antagonism]
+controls: [target_point_mutants, unrelated_protein, family_cross_screen]
+backend:
+  kind: linux-gpu
+  gpu_vram_gb: 24
+  output_root: /work/designs/example
+tools:
+  rfdiffusion:
+    repository: https://github.com/RosettaCommons/RFdiffusion
+    repo_path: /opt/RFdiffusion
+    commit: REPLACE_WITH_COMMIT
+    license: BSD-3-Clause
+    checkpoint: /models/rfdiffusion/Base_ckpt.pt
+    checkpoint_sha256: REPLACE_WITH_SHA256
+    command_template: "python {repo_path}/scripts/run_inference.py inference.input_pdb={target_structure} inference.ckpt_override_path={checkpoint} inference.output_prefix={output_dir}/rfdiffusion/design inference.num_designs={candidate_count} 'ppi.hotspot_res=[{hotspots_csv}]'"
+  proteinmpnn:
+    repository: https://github.com/dauparas/ProteinMPNN
+    repo_path: /opt/ProteinMPNN
+    commit: REPLACE_WITH_COMMIT
+    license: MIT
+    checkpoint: /models/proteinmpnn/v_48_020.pt
+    checkpoint_sha256: REPLACE_WITH_SHA256
+    command_template: "python {repo_path}/protein_mpnn_run.py --pdb_path {output_dir}/selected_backbones.pdb --out_folder {output_dir}/proteinmpnn --seed {seed}"
+  structure_predictor:
+    repository: REPLACE_WITH_OFFICIAL_REPOSITORY
+    repo_path: /opt/structure_predictor
+    commit: REPLACE_WITH_COMMIT
+    license: REPLACE_WITH_LICENSE
+    checkpoint: /models/predictor/checkpoint
+    checkpoint_sha256: REPLACE_WITH_SHA256
+    command_template: "python {repo_path}/predict.py --manifest {run_manifest} --output {output_dir}/predictions"
+reproducibility:
+  seed: 20260722
+  candidate_count: 1000
+filters:
+  - name: interaction_pae
+    operator: "<"
+    value: 7.5
+    stage: initial_complex_prediction
+    source_doi: 10.1126/science.adp1779
+    source_locator: "Methods > Computational design and filtering"
+    scope: paper-reported starting recipe for this task and stage
