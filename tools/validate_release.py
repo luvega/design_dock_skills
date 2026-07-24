@@ -23,6 +23,7 @@ PUBLIC_TEXT_ROOTS = [
 ]
 REQUIRED_FILES = [
     ROOT / "README.md",
+    ROOT / "requirements.txt",
     ROOT / "docs/assets/project-icon.png",
     ROOT / "docs/assets/workflow-overview.png",
     ROOT / "docs/assets/method-taxonomy.png",

@@ -124,10 +124,14 @@ Skill 提供五种模式：
 git clone https://github.com/luvega/design_dock_skills.git
 Set-Location design_dock_skills
 
+python -m pip install -r .\requirements.txt
+
 $target = (Resolve-Path ".\skills\baker-protein-design").Path
 $link = Join-Path $env:USERPROFILE ".codex\skills\baker-protein-design"
 New-Item -ItemType Junction -Path $link -Target $target
 ```
+
+Python 脚本的直接依赖只有固定版本的 `PyYAML`。上面的安装命令由用户显式执行；skill 本身不会安装 Python 包、模型环境或外部工具。
 
 如果 `$link` 已存在，先检查它的目标；不要覆盖另一份正在使用的 skill。建立联接后新开一个 Codex 会话，使用：
 
@@ -245,6 +249,7 @@ python -m unittest discover `
 ```text
 design_dock_skills/
 ├── README.md
+├── requirements.txt
 ├── docs/
 │   ├── assets/
 │   ├── architecture-and-safety.md
